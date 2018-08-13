@@ -1,0 +1,42 @@
+Private Sub ComboBox1_Change()
+    Dim PName As String, PQty As String, PCost As String
+    PName = DisplayProductName(ComboBox1.Value)
+    PQty = DisplayProductQty(ComboBox1.Value)
+    PCost = DisplayProductCost(ComboBox1.Value)
+    TextBox1.Text = PName
+    TextBox2.Text = PQty
+    TextBox3.Text = PCost
+End Sub
+
+Private Sub CommandButton1_Click()
+    Dim PNameNew As String, PQtyNew As String, PCostNew As String, ProductId As String
+    ProductId = ComboBox1.Value
+    PNameNew = TextBox1.Text
+    PQtyNew = TextBox2.Text
+    PCostNew = TextBox3.Text
+    Call UpdateProductDetails(ProductId, PNameNew, PQtyNew, PCostNew)
+End Sub
+
+Private Sub CommandButton2_Click()
+    Me.Hide
+End Sub
+
+Private Sub UserForm_Initialize()
+    Dim vArr As Variant
+    Dim i As Integer
+    lastRow = ActiveSheet.UsedRange.Rows.Count
+    
+    vArr = WorksheetFunction.Transpose(ActiveSheet.Range("A2:A" & lastRow).Value)
+    With ComboBox1
+         .Clear
+         For i = LBound(vArr) To UBound(vArr)
+            .AddItem vArr(i)
+         Next i
+    End With
+End Sub
+
+
+
+
+
+

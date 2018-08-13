@@ -1,0 +1,63 @@
+Function DisplayProductName(PId As String) As String
+   Dim searchPos As Integer
+    searchPos = fnSearchByPId(PId) + 1
+    If searchPos > 0 Then
+        DisplayProductName = ActiveSheet.Range("B" & searchPos).Value
+    Else
+        DisplayProductName = "Product Details Not Found"
+     End If
+End Function
+
+
+
+Function fnSearchByPId(PId As String) As Integer
+   Dim lastRow As Long
+   Dim TargetRange As Range
+   
+   On Error GoTo MyErrorHandler
+   
+   lastRow = ActiveSheet.UsedRange.Rows.Count
+   Set TargetRange = ActiveSheet.Range("A2:A" & lastRow)
+   fnSearchByPId = WorksheetFunction.Match(PId, TargetRange, 0)
+   Exit Function
+   
+MyErrorHandler:
+    fnSearchByPId = 0
+    
+End Function
+
+
+
+Function DisplayProductQty(PId As String) As String
+   Dim searchPos As Integer
+    searchPos = fnSearchByPId(PId) + 1
+    If searchPos > 0 Then
+        DisplayProductQty = ActiveSheet.Range("C" & searchPos).Value
+    Else
+        DisplayProductQty = "Product Details Not Found"
+     End If
+End Function
+
+
+
+Function DisplayProductCost(PId As String) As String
+   Dim searchPos As Integer
+    searchPos = fnSearchByPId(PId) + 1
+    If searchPos > 0 Then
+        DisplayProductCost = ActiveSheet.Range("D" & searchPos).Value
+    Else
+        DisplayProductCost = "Product Details Not Found"
+     End If
+End Function
+
+
+
+Sub UpdateProductDetails(PId As String, PNameNew As String, PQtyNew As String, PCostNew As String)
+    Dim searchPos As Integer
+    searchPos = fnSearchByPId(PId) + 1
+    ActiveSheet.Range("B" & searchPos).Value = PNameNew
+    ActiveSheet.Range("C" & searchPos).Value = PQtyNew
+    ActiveSheet.Range("D" & searchPos).Value = PCostNew
+End Sub
+
+
